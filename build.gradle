@@ -1,0 +1,49 @@
+repositories {
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:3.1.10"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+apply plugin: "test-report-aggregation"
+
+
+
+dependencies {
+    implementation group: 'net.serenity-bdd', name: 'serenity-junit', version: '3.7.1'
+    implementation 'net.serenity-bdd:serenity-core:3.7.1'
+    implementation 'net.serenity-bdd:serenity-cucumber:3.7.1'
+    implementation 'net.serenity-bdd:serenity-screenplay:3.7.1'
+    implementation 'net.serenity-bdd:serenity-screenplay-webdriver:3.7.1'
+    implementation 'org.seleniumhq.selenium:selenium-server:3.141.59'
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+}
+
+
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+
+}
+
+
+gradle.startParameter.continueOnFailure = true
+test.finalizedBy(aggregate)
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
