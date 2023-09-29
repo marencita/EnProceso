@@ -2,17 +2,12 @@ pipeline {
   agent any
 
   stages {
-	stage('Git Clone') {
-            steps {
-				git clone https://github.com/marencita/SumaDosNumeros.git
-            }
-        }
- stage('ejecucion'){
+	
+	stage('ejecucion'){
      
       steps {
           script {	
-		   cd SumaDosNumeros
-           gradle test aggregate --no-build-cache
+           sh "gradle test aggregate --no-build-cache"
         }
       }
     }
